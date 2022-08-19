@@ -1,0 +1,3 @@
+export const SET_RETRIEVE = "PLACES/RETRIEVE"
+export const SET_SUCCESS = "PLACES/SET_SUCCESS"
+export const SET_FAILED = "PLACES/SET_FAILED"
