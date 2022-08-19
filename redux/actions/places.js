@@ -1,13 +1,13 @@
 import * as types from "./../types/places";
 
-export const setRetrievePlaces = () => () => {
+export const setListPlaces = () => () => {
   type: types.SET_RETRIEVE
 }
 
-export const setRetrievePlacesSuccess = () => () => {
+export const setSelectedPlaces = () => () => {
   type: types.SET_SUCCESS
 }
 
-export const setRetrievePlacesFailed = () => () => {
+export const resetPlaces = () => () => {
   type: types.SET_FAILED
 }
