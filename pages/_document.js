@@ -2,6 +2,7 @@ import * as React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 import createEmotionCache from "../utils/createEmotionCache";
+import Script from 'next/script'
 
 export default class MyDocument extends Document {
  render() {
@@ -13,6 +14,10 @@ export default class MyDocument extends Document {
        <body>
          <Main />
          <NextScript />
+         <Script
+          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAP_PLATFORM_API_KEY}&libraries=places`}
+          strategy="beforeInteractive"
+        ></Script>
        </body>
      </Html>
    );
