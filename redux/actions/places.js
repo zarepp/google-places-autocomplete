@@ -1,13 +1,22 @@
-import * as types from "./../types/places";
+import * as typesPlaces from "./../types/places";
 
-export const setListPlaces = () => () => {
-  type: types.SET_RETRIEVE
+export const setListPlaces = (data) => (dispatch) => {
+  dispatch({
+    type: typesPlaces.SET_LIST,
+    payload: data
+  })
 }
 
-export const setSelectedPlaces = () => () => {
-  type: types.SET_SUCCESS
+export const setSelectedPlaces = (data) => (dispatch) => {
+  dispatch({
+    type: typesPlaces.SET_SELECTED,
+    payload: data
+  })
 }
 
-export const resetPlaces = () => () => {
-  type: types.SET_FAILED
+export const resetPlaces = () => (dispatch) => {
+  dispatch({
+    type: typesPlaces.RESET,
+    payload: data
+  })
 }
