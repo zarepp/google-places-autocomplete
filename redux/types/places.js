@@ -1,3 +1,14 @@
+// General
 export const SET_LIST = "PLACES/SET_LIST"
 export const SET_SELECTED = "PLACES/SET_SELECTED"
 export const RESET = "PLACES/RESET"
+
+// Manage Favorite
+export const SET_FAVORITE = "PLACES/SET_FAVORITE"
+export const RESET_FAVORITE = "PLACES/RESET_FAVORITE"
+export const REMOVE_FAVORITE_BY_ID = "PLACES/REMOVE_FAVORITE_BY_ID"
+
+// Manage History
+export const SET_HISTORY = "PLACES/SET_HISTORY"
+export const RESET_HISTORY = "PLACES/RESET_HISTORY"
+export const REMOVE_HISTORY_BY_ID = "PLACES/REMOVE_HISTORY_BY_ID"
