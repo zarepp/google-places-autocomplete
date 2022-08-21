@@ -7,7 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 
-export default function IconList({ title }) {
+export default function IconList({ title, onClickDelete }) {
   return (
     <List sx={{ width: '100%', maxWidth: 360 }}>
       <ListItem>
@@ -17,7 +17,7 @@ export default function IconList({ title }) {
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary={title} sx={{ color: 'black' }} />
-          <IconButton>
+          <IconButton onClick={onClickDelete}>
             <DeleteIcon />
           </IconButton>
       </ListItem>
