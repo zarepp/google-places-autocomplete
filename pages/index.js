@@ -70,7 +70,7 @@ export default function Home() {
             <span className={s.fontTitle}>Store Your Google Place Search Result!!</span>
           </div>
           <div className={s.marginSubtitle}>
-            <span className={s.fontSubtitle}>Don't think much just find it here =)</span>
+            <span className={s.fontSubtitle}>{`Don't think much just find it here =)`}</span>
           </div>
         <Autocomplete
           disablePortal
