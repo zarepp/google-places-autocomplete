@@ -6,23 +6,30 @@ import { useSelector, useDispatch } from 'react-redux'
 import usePlacesAutocomplete from "use-places-autocomplete";
 import IconList from '../components/IconList';
 import Grid from '@mui/material/Grid';
-
+import Button from '@mui/material/Button';
+import FolderDeleteIcon from '@mui/icons-material/FolderDelete';
+import IconButton from '@mui/material/IconButton';
 
 import {
   setListPlaces,
   setSelectedPlaces,
   resetPlaces,
+  resetFavoritePlaces,
+  removeFavoritePlacesById,
+  setFavoritePlaces,
+  setHistoryPlaces,
+  resetHistoryPlaces,
+  removeHistoryPlacesById,
 } from "../redux/actions/places";
-import { flexbox } from '@mui/system';
-
-const label = { inputProps: { "aria-label": "Switch demo" } };
 
 export default function Home() {
   const dispatch = useDispatch();
 
+  const redux = useSelector(state => state.places)
   const listRedux = useSelector(state => state.places.list)
   const selectedRedux = useSelector(state => state.places.selected)
-  console.log("listRedux", listRedux)
+  const favouriteRedux = useSelector(state => state.places.favorite)
+  const historyRedux = useSelector(state => state.places.history)
 
   const [data, setData] = useState([])
   const [selectedPlace, setSelectedPlace] = useState({})
@@ -56,14 +63,14 @@ export default function Home() {
 
   return (
     <div className={s.container}>
-      <Grid container>
+      <Grid container sx={{ marginBottom: 2 }}>
         <Grid item md={2} xs={1}/>
         <Grid item md={8} xs={10}>
           <div className={s.marginTitle}>
             <span className={s.fontTitle}>Store Your Google Place Search Result!!</span>
           </div>
           <div className={s.marginSubtitle}>
-            <span className={s.fontSubtitle}>Don't think much just google it here =)</span>
+            <span className={s.fontSubtitle}>Don't think much just find it here =)</span>
           </div>
         <Autocomplete
           disablePortal
@@ -74,11 +81,21 @@ export default function Home() {
           getOptionLabel={(option) => option.description || ""}
           renderInput={handleRenderInput}
           onChange={(event, value) => {
-            setSelectedPlace(value)
-            dispatch(setSelectedPlaces(value))
-            dispatch(setListPlaces(data))
+            if (value !== null) {
+              setSelectedPlace(value)
+              dispatch(setSelectedPlaces(value))
+              dispatch(setListPlaces(data))
+              dispatch(setHistoryPlaces(value))
+            }
           }}
         />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => dispatch(setFavoritePlaces(selectedPlace))}
+        >
+          Add to Favourite
+        </Button>
         <Grid item md={2} xs={1}/>
         </Grid>
       </Grid>
@@ -87,22 +104,27 @@ export default function Home() {
         <Grid item md={4} xs={12}>
           <div className={s.marginFont}>
             <span>Favourite:</span>
+            <span>
+              <IconButton onClick={() => dispatch(resetFavoritePlaces())}>
+                <FolderDeleteIcon/>
+              </IconButton>
+            </span>
           </div>
-          { listRedux.length > 0 && (
+          { favouriteRedux.length > 0 && (
             <div>
-              { listRedux.map((place) => {
+              { favouriteRedux.map((place) => {
                 return (
                   <IconList
                     key={place.place_id}
                     title={place.description}
-                    description={`Place ID: ${place.place_id}`}
+                    onClickDelete={() => dispatch(removeFavoritePlacesById(place))}
                   />
                 )
               })}
             </div>
           )}
-          { listRedux.length < 1 && (
-            <div>
+          { favouriteRedux.length < 1 && (
+            <div className={s.marginFont}>
               No record yet
             </div>
           )}
@@ -110,17 +132,28 @@ export default function Home() {
         </Grid>
         <Grid item md={4} xs={12}>
           <div className={s.marginFont}>
-            <span>History:</span>
+            <span>History: </span>
+            <span>
+              <IconButton onClick={() => dispatch(resetHistoryPlaces())}>
+                <FolderDeleteIcon />
+              </IconButton>
+            </span>
           </div>
-          { Object.keys(selectedRedux).length > 0 && (
-            <IconList
-              key={selectedRedux.place_id}
-              title={selectedRedux.description}
-              selectedRedux={`Place ID: ${selectedRedux.place_id}`}
-            />
-          )}
-          { Object.keys(selectedRedux).length < 1 && (
+          { historyRedux.length > 0 && (
             <div>
+              { historyRedux.map((place) => {
+                return (
+                  <IconList
+                    key={place.place_id}
+                    title={place.description}
+                    onClickDelete={() => dispatch(removeHistoryPlacesById(place))}
+                  />
+                )
+              })}
+            </div>
+          )}
+          { historyRedux.length < 1 && (
+            <div className={s.marginFont}>
               No record yet
             </div>
           )}
